@@ -8,22 +8,32 @@ f.close()
 
 # This year, how many houses receive at least one present?
 
-x, y = 0, 0
-visited = set()
-visited.add((x, y)) #start position, set will add cords but not overwrite, basically a list of cords
-directions = text
+sx, sy = 0, 0 #reg santa location
+rx, ry = 0, 0 #robo santa location
+visited = set() #list for locations, no dupes
+visited.add((sx, sy)) #start position, set will add cords but not overwrite, basically a list of cords
+directions = text #takes text input as directions
 
-for move in directions:
-    if move == "^":
-        y += 1
-    elif move == "v":
-        y -= 1
-    elif move == ">":
-        x += 1
-    elif move == "<":
-        x -= 1
+def moveSanta(x, y, move): #could prov be inline with enumerate function
+        if move == "^":
+            y += 1
+            return x, y
+        elif move == "v":
+            y -= 1
+            return x, y
+        elif move == ">":
+            x += 1
+            return x, y
+        elif move == "<":
+            x -= 1
+            return x, y
+            
+for i, move in enumerate(directions): #enumerate is basically for i = 0; i<10; i++, a way of keeping count of which santa should move.
+    if i % 2 == 0:  # Santa
+        sx, sy = moveSanta(sx, sy, move)
+        visited.add((sx, sy))
+    else:  # Robo-Santa
+        rx, ry = moveSanta(rx, ry, move)
+        visited.add((rx, ry))
 
-    visited.add((x, y))
-
-    Houses = len(visited)
-    print(Houses)
+print(len(visited))
