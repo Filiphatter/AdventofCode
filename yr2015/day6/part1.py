@@ -2,7 +2,8 @@ f = open('input.txt', 'r')
 text = f.read()
 f.close()
 
-# Because your neighbors keep defeating you in the holiday house decorating contest year after year, you've decided to deploy one million lights in a 1000x1000 grid.
+# Because your neighbors keep defeating you in the holiday house decorating contest year after year, 
+# you've decided to deploy one million lights in a 1000x1000 grid.
 
 # Furthermore, because you've been especially nice this year, Santa has mailed you instructions on how to display the ideal lighting configuration.
 
@@ -20,3 +21,37 @@ f.close()
 # turn off 499,499 through 500,500 would turn off (or leave off) the middle four lights.
 # After following the instructions, how many lights are lit?
 
+
+
+directions = text.splitlines()
+
+grid = [[False] * 1000 for _ in range(1000)]
+
+for move in directions:
+    parts = move.split()
+    if 'on' in parts:
+        x1, y1 = map(int, parts[2].split(','))
+        x2, y2 = map(int, parts[4].split(','))
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                grid[x][y] = True
+
+    elif 'off' in parts:
+        x1, y1 = map(int, parts[2].split(','))
+        x2, y2 = map(int, parts[4].split(','))
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                grid[x][y] = False
+
+    elif 'toggle' in parts:
+        x1, y1 = map(int, parts[1].split(','))
+        x2, y2 = map(int, parts[3].split(','))
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                grid[x][y] = not grid[x][y]
+                             
+    amountOfTrue = 0
+    for row in grid:
+        amountOfTrue += sum(row)
+
+print(amountOfTrue)
