@@ -6,3 +6,5 @@
 
 ## disappointments / 2 confusing
 - day 5, p1, a little on pt2 due to indents being dumb
+
+hejsan alex :3
